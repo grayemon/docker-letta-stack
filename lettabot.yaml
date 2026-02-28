@@ -1,0 +1,19 @@
+# LettaBot Configuration
+server:
+  mode: docker
+  baseUrl: http://letta-server:8283
+
+agent:
+  name: LettaBot
+  model: gpt-4o
+
+channels:
+  telegram:
+    enabled: true
+    token: ${TELEGRAM_BOT_TOKEN}
+    dmPolicy: pairing
+
+features:
+  cron: false
+  heartbeat:
+    enabled: false

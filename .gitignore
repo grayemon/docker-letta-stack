@@ -1,0 +1,8 @@
+.env
+
+data/letta-server/
+data/letta-bot/
+data/letta-workspace/
+
+.letta
+.venv
