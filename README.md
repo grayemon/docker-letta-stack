@@ -37,6 +37,7 @@ All services run on a Docker network with health checks and persistent volumes. 
    ```bash
    OPENAI_API_KEY=sk-your-openai-key-here
    TELEGRAM_BOT_TOKEN=your-telegram-bot-token-here
+   # Optional (Compose already uses internal URL)
    LETTA_BASE_URL=http://letta-server:8283
    ```
 
@@ -87,10 +88,10 @@ curl http://localhost:8283/v1/health
 ├── .env.example              # Environment variable template
 ├── .env                      # Your actual environment (not in git)
 ├── lettabot.yaml             # Bot configuration
-├── lettabot-agent.json       # Agent configuration
 └── data/                     # Persistent data (not in git)
     ├── letta-server/         # PostgreSQL database
     ├── letta-bot/            # Bot application data
+    │   └── lettabot-agent.json  # Agent state (auto-created)
     └── letta-workspace/      # Development workspace files
 ```
 
@@ -100,18 +101,24 @@ curl http://localhost:8283/v1/health
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `LETTA_BASE_URL` | Yes | Internal Docker network URL (use `http://letta-server:8283`) |
+| `LETTA_BASE_URL` | No | Internal Docker network URL (Compose uses `http://letta-server:8283`) |
 | `OPENAI_API_KEY` | Yes | OpenAI API key for LLM access |
 | `TELEGRAM_BOT_TOKEN` | Yes | From @BotFather on Telegram |
 | `ALLOWED_USERS` | No | Comma-separated Telegram user IDs to restrict access |
+| `DATA_DIR` | No | Persistent data dir for LettaBot (default: `/app`) |
 
 ### Bot Configuration (lettabot.yaml)
 
 Edit `lettabot.yaml` to customize:
-- Agent name and model
+- Agent name (model handle is set via CLI)
 - Channel settings (Telegram, Slack, Discord)
 - Feature toggles (cron, heartbeat)
 - Working directory
+
+Set the model handle after first message:
+```bash
+docker-compose exec letta-bot lettabot model set openai/gpt-4o-mini
+```
 
 ## 🏗️ Services
 
@@ -171,6 +178,8 @@ docker-compose logs letta-bot
 # Verify configuration
 docker-compose exec letta-bot cat /app/lettabot.yaml
 ```
+
+If you see Windows file lock errors (EBUSY), ensure `DATA_DIR=/app/data` is set in docker-compose (already configured here).
 
 ### Reset everything
 
