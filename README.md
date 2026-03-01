@@ -142,7 +142,8 @@ curl http://localhost:8283/v1/health
 ├── Dockerfile.workspace      # Workspace container build
 ├── .env.example              # Environment variable template
 ├── .env                      # Your actual environment (not in git)
-├── lettabot.yaml             # Bot configuration
+├── lettabot.local.yaml        # Bot configuration (local server mode)
+├── lettabot.cloud.yaml        # Bot configuration (cloud API mode)
 └── data/                     # Persistent data (not in git)
     ├── letta-server/         # PostgreSQL database
     ├── letta-bot/            # Bot application data
@@ -162,9 +163,12 @@ curl http://localhost:8283/v1/health
 | `ALLOWED_USERS` | No | Comma-separated Telegram user IDs to restrict access |
 | `DATA_DIR` | No | Persistent data dir for LettaBot (default: `/app`) |
 
-### Bot Configuration (lettabot.yaml)
+### Bot Configuration
 
-Edit `lettabot.yaml` to customize:
+**Local server mode:** Edit `lettabot.local.yaml`
+**Cloud API mode:** Edit `lettabot.cloud.yaml`
+
+Customize:
 - Agent name (model handle is set via CLI)
 - Channel settings (Telegram, Slack, Discord)
 - Feature toggles (cron, heartbeat)
@@ -298,6 +302,24 @@ Services communicate via Docker network named `letta-network`:
 ## 🤝 Contributing
 
 Contributions welcome! Feel free to submit issues and pull requests.
+
+## 📝 Development Diary
+
+### [2026-03-01] Initial setup and profile-based configuration
+- Created docker-letta-stack repository
+- Added Docker Compose setup with letta-server, letta-bot, letta-workspace
+- Implemented profile-based configuration (local vs cloud modes)
+- Created separate config files: lettabot.local.yaml, lettabot.cloud.yaml
+- Added comprehensive documentation in README.md
+- Configured environment variables with clear mode selection
+
+### Future improvements
+- [ ] Add GitHub Actions for automated testing
+- [ ] Add backup/restore scripts for data portability
+- [ ] Explore multi-channel support (Slack, Discord, WhatsApp)
+- [ ] Add monitoring and logging setup
+
+---
 
 ## 📄 License
 
