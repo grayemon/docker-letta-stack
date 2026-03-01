@@ -4,9 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile.lettabot
     container_name: letta-bot
-    depends_on:
-      letta-server:
-        condition: service_healthy
     volumes:
       - ./data/letta-bot:/app/data
       - ./lettabot.cloud.yaml:/app/lettabot.yaml:ro
@@ -24,17 +21,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-    profiles:
-      - cloud
 
   letta-workspace:
     build:
       context: .
       dockerfile: Dockerfile.workspace
     container_name: letta-workspace
-    depends_on:
-      letta-server:
-        condition: service_healthy
     volumes:
       - ./data/letta-workspace:/workspace
     environment:
@@ -48,8 +40,6 @@ services:
       timeout: 5s
       retries: 3
     command: tail -f /dev/null
-    profiles:
-      - cloud
 
 networks:
   letta-network:
