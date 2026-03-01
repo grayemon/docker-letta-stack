@@ -6,3 +6,5 @@ data/letta-workspace/
 
 .letta
 .venv
+
+resources/
