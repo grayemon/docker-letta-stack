@@ -1,0 +1,24 @@
+# LettaBot Configuration - Cloud API Mode
+# This configuration connects to api.letta.com
+
+server:
+  mode: api
+  # baseUrl: https://api.letta.com  # Default, can omit
+  apiKey: ${LETTA_API_KEY}
+
+agents:
+  - name: LettaBot
+    channels:
+      telegram:
+        enabled: true
+        token: ${TELEGRAM_BOT_TOKEN}
+        dmPolicy: open
+        groupDebounceSec: 5
+
+features:
+  cron: false
+  heartbeat:
+    enabled: false
+    intervalMin: 30
+  memfs: true
+  allowedTools: [Read, Glob, Grep, Bash, Write, Edit, web_search, conversation_search]

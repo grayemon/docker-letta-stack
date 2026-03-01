@@ -29,7 +29,8 @@ services:
         condition: service_healthy
     volumes:
       - ./data/letta-bot:/app/data
-      - ./lettabot.yaml:/app/lettabot.yaml
+      - ./lettabot.local.yaml:/app/lettabot.yaml:ro  # Local mode
+      - ./lettabot.cloud.yaml:/app/lettabot.yaml:ro  # Cloud mode
     environment:
       - LETTA_BASE_URL=${LETTA_BASE_URL:-http://letta-server:8283}
       - LETTA_API_KEY=${LETTA_API_KEY}

@@ -52,7 +52,10 @@ All services run on a Docker network with health checks and persistent volumes. 
    - `LETTA_BASE_URL` required: `http://letta-server:8283`
    - `LETTA_API_KEY` optional (if using local server with your own key)
 
-   To use local server, uncomment `LETTA_BASE_URL=http://letta-server:8283` in `.env`
+   Configuration files:
+   - `lettabot.cloud.yaml` - Used for cloud mode
+   - `lettabot.local.yaml` - Used for local server mode
+   - Docker Compose automatically mounts the correct file based on profile
 
 3. **Get a Telegram bot token:**
    - Open Telegram and message [@BotFather](https://t.me/BotFather)
@@ -65,16 +68,19 @@ All services run on a Docker network with health checks and persistent volumes. 
    ```bash
    docker-compose --profile local up -d
    ```
+   Uses: `lettabot.local.yaml`
 
    **Cloud mode (api.letta.com):**
    ```bash
    docker-compose --profile cloud up -d
    ```
+   Uses: `lettabot.cloud.yaml`
 
-   **All services:**
+   **All services (default):**
    ```bash
    docker-compose up -d
    ```
+   Uses: `lettabot.local.yaml` (same as local mode)
 
 5. **Verify services are running:**
    ```bash

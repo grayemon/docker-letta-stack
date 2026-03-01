@@ -1,0 +1,23 @@
+# LettaBot Configuration - Local Server Mode
+# This configuration connects to local letta-server container
+
+server:
+  mode: docker
+  baseUrl: http://letta-server:8283
+
+agents:
+  - name: LettaBot
+    channels:
+      telegram:
+        enabled: true
+        token: ${TELEGRAM_BOT_TOKEN}
+        dmPolicy: open
+        groupDebounceSec: 5
+
+features:
+  cron: false
+  heartbeat:
+    enabled: false
+    intervalMin: 30
+  memfs: true
+  allowedTools: [Read, Glob, Grep, Bash, Write, Edit, web_search, conversation_search]
