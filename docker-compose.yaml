@@ -16,8 +16,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-    profiles:
-      - local
 
   letta-bot:
     build:
@@ -45,9 +43,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-    profiles:
-      - cloud
-      - local
 
   letta-workspace:
     build:
@@ -72,9 +67,6 @@ services:
       timeout: 5s
       retries: 3
     command: tail -f /dev/null
-    profiles:
-      - cloud
-      - local
 
 networks:
   letta-network:
