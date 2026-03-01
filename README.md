@@ -66,22 +66,15 @@ All services run on a Docker network with health checks and persistent volumes. 
 
    **Local mode (with letta-server):**
    ```bash
-   docker-compose --profile local up -d
+   docker-compose --file docker-compose.local.yaml up -d
    ```
    Uses: `lettabot.local.yaml` (includes letta-server)
-   All services start automatically (no need to list them)
 
    **Cloud mode (api.letta.com):**
    ```bash
-   docker-compose --profile cloud up -d
+   docker-compose --file docker-compose.cloud.yaml up -d
    ```
-   Uses: `lettabot.cloud.yaml`
-
-   **All services (default):**
-   ```bash
-   docker-compose up -d
-   ```
-   Uses: `lettabot.local.yaml` (same as local mode)
+   Uses: `lettabot.cloud.yaml` (no letta-server)
 
 5. **Verify services are running:**
    ```bash
@@ -106,17 +99,19 @@ All services run on a Docker network with health checks and persistent volumes. 
 
 Start with local server:
 ```bash
-docker-compose --profile local up -d
+docker-compose --file docker-compose.local.yaml up -d
 ```
 
 Start with cloud API:
 ```bash
-docker-compose --profile cloud up -d
+docker-compose --file docker-compose.cloud.yaml up -d
 ```
 
-Start all services (default):
+Stop services:
 ```bash
-docker-compose up -d
+docker-compose --file docker-compose.local.yaml down
+# Or
+docker-compose --file docker-compose.cloud.yaml down
 ```
 
 ### Docker Compose
@@ -334,15 +329,15 @@ Contributions welcome! Feel free to submit issues and pull requests.
 **Set model handle:**
 ```bash
 # For local mode:
-docker-compose --profile local exec letta-bot lettabot model set openai/gpt-4o-mini
+docker-compose --file docker-compose.local.yaml exec letta-bot lettabot model set openai/gpt-4o-mini
 
 # Or for cloud mode:
-docker-compose --profile cloud exec letta-bot lettabot model set openai/gpt-4o-mini
+docker-compose --file docker-compose.cloud.yaml exec letta-bot lettabot model set openai/gpt-4o-mini
 ```
 
 **Interactive setup:**
 ```bash
-docker-compose --profile local exec letta-bot lettabot onboard
+docker-compose --file docker-compose.local.yaml exec letta-bot lettabot onboard
 ```
 
 ### Update Letta-Code
@@ -350,9 +345,9 @@ docker-compose --profile local exec letta-bot lettabot onboard
 Letta-Code is pre-installed in the letta-workspace container. To update:
 
 ```bash
-docker-compose --profile local exec letta-workspace pip install --upgrade letta-code
+docker-compose --file docker-compose.local.yaml exec letta-workspace pip install --upgrade letta-code
 # Or
-docker-compose --profile cloud exec letta-workspace pip install --upgrade letta-code
+docker-compose --file docker-compose.cloud.yaml exec letta-workspace pip install --upgrade letta-code
 ```
 
 ### Additional Resources
