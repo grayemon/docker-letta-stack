@@ -313,11 +313,54 @@ Contributions welcome! Feel free to submit issues and pull requests.
 - Added comprehensive documentation in README.md
 - Configured environment variables with clear mode selection
 
+### [2026-03-01] Added tool update and reference documentation
+- Added section on updating letta-code and lettabot
+- Referenced resources/SKILL.md for detailed LettaBot commands
+- Added model configuration instructions with profile support
+
 ### Future improvements
 - [ ] Add GitHub Actions for automated testing
 - [ ] Add backup/restore scripts for data portability
 - [ ] Explore multi-channel support (Slack, Discord, WhatsApp)
 - [ ] Add monitoring and logging setup
+
+---
+
+## 🛠️ Tool Management
+
+### Update LettaBot Configuration
+
+**Set model handle:**
+```bash
+# For local mode:
+docker-compose --profile local exec letta-bot lettabot model set openai/gpt-4o-mini
+
+# Or for cloud mode:
+docker-compose --profile cloud exec letta-bot lettabot model set openai/gpt-4o-mini
+```
+
+**Interactive setup:**
+```bash
+docker-compose --profile local exec letta-bot lettabot onboard
+```
+
+### Update Letta-Code
+
+Letta-Code is pre-installed in the letta-workspace container. To update:
+
+```bash
+docker-compose --profile local exec letta-workspace pip install --upgrade letta-code
+# Or
+docker-compose --profile cloud exec letta-workspace pip install --upgrade letta-code
+```
+
+### Additional Resources
+
+See [resources/SKILL.md](./resources/SKILL.md) for complete LettaBot command reference including:
+- `lettabot onboard` - Interactive setup wizard
+- `lettabot skills` - Manage skills
+- `lettabot destroy` - Reset all data
+- `lettabot help` - Show help
 
 ---
 
