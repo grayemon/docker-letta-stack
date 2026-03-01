@@ -38,16 +38,40 @@ All services run on a Docker network with health checks and persistent volumes. 
    LETTA_API_KEY=letta-your-api-key-here
    OPENAI_API_KEY=sk-your-openai-key-here
    TELEGRAM_BOT_TOKEN=your-telegram-bot-token-here
-   # Optional (Compose already uses internal URL)
-   LETTA_BASE_URL=http://letta-server:8283
    ```
+
+   **Choose your mode:**
+
+   **Cloud mode (api.letta.com):**
+   - `LETTA_API_KEY` required
+   - `LETTA_BASE_URL` optional (defaults to https://api.letta.com)
+   - `OPENAI_API_KEY` optional (if using Letta cloud with your own key)
+
+   **Local mode (letta-server):**
+   - `OPENAI_API_KEY` required
+   - `LETTA_BASE_URL` required: `http://letta-server:8283`
+   - `LETTA_API_KEY` optional (if using local server with your own key)
+
+   To use local server, uncomment `LETTA_BASE_URL=http://letta-server:8283` in `.env`
 
 3. **Get a Telegram bot token:**
    - Open Telegram and message [@BotFather](https://t.me/BotFather)
    - Send `/newbot` and follow the prompts
    - Copy the bot token (looks like `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`)
 
-4. **Start all services:**
+4. **Start services:**
+
+   **Local mode (with letta-server):**
+   ```bash
+   docker-compose --profile local up -d
+   ```
+
+   **Cloud mode (api.letta.com):**
+   ```bash
+   docker-compose --profile cloud up -d
+   ```
+
+   **All services:**
    ```bash
    docker-compose up -d
    ```
@@ -63,6 +87,30 @@ All services run on a Docker network with health checks and persistent volumes. 
    - Try: "Hello!" or "What can you help me with?"
 
 ## 📋 Commands
+
+### Docker Compose Profiles
+
+**Profiles available:**
+- `local` - Includes letta-server, letta-bot, letta-workspace
+- `cloud` - letta-bot and letta-workspace only (connects to api.letta.com)
+- Default (no profile) - All services (same as `local`)
+
+**Usage:**
+
+Start with local server:
+```bash
+docker-compose --profile local up -d
+```
+
+Start with cloud API:
+```bash
+docker-compose --profile cloud up -d
+```
+
+Start all services (default):
+```bash
+docker-compose up -d
+```
 
 ### Docker Compose
 

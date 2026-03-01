@@ -1,18 +1,37 @@
 # LettaBot Configuration
+# ============================================
+# Server modes:
+# ============================================
+# 'api' mode: Connect to Letta API (api.letta.com) or custom server
+#   Required: LETTA_API_KEY (from .env)
+#   Optional: LETTA_BASE_URL (defaults to https://api.letta.com)
+#
+# 'docker' mode: Connect to Docker Letta server in same network
+#   Required: LETTA_BASE_URL (must be set to server URL)
+#   Optional: LETTA_API_KEY (if using custom API key with local server)
+# ============================================
 server:
-  baseUrl: http://letta-server:8283
+  mode: api
+  # baseUrl: http://letta-server:8283  # Set in .env for local server
 
-conversations:
-  mode: shared
-  heartbeat: last-active
-
-channels:
-  telegram:
-    enabled: true
-    botToken: ${TELEGRAM_BOT_TOKEN}
-    dmPolicy: open
+agents:
+  - name: LettaBot
+    # displayName: "🤖 LettaBot"  # Prefix outbound messages
+    # Note: model is configured on the Letta agent server-side
+    channels:
+      telegram:
+        enabled: true
+        token: ${TELEGRAM_BOT_TOKEN}
+        dmPolicy: open
+        # groupDebounceSec: 5  # Debounce seconds for group batching
+        # groups:
+        #   "*": { mode: listen }  # Observe all groups; only reply when @mentioned
+        #   "-100123456": { mode: open }  # This group gets all messages
 
 features:
   cron: false
   heartbeat:
     enabled: false
+    intervalMin: 30
+  memfs: true  # Enable memory filesystem (git-backed context repository)
+  allowedTools: [Read, Glob, Grep, Bash, Write, Edit, web_search, conversation_search]

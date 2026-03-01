@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    profiles:
+      - local
 
   letta-bot:
     build:
@@ -29,7 +31,7 @@ services:
       - ./data/letta-bot:/app/data
       - ./lettabot.yaml:/app/lettabot.yaml
     environment:
-      - LETTA_BASE_URL=http://letta-server:8283
+      - LETTA_BASE_URL=${LETTA_BASE_URL:-http://letta-server:8283}
       - LETTA_API_KEY=${LETTA_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_DM_POLICY=open
@@ -42,6 +44,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    profiles:
+      - cloud
+      - local
 
   letta-workspace:
     build:
@@ -56,7 +61,7 @@ services:
     volumes:
       - ./data/letta-workspace:/workspace
     environment:
-      - LETTA_BASE_URL=http://letta-server:8283
+      - LETTA_BASE_URL=${LETTA_BASE_URL:-http://letta-server:8283}
     networks:
       - letta-network
     restart: unless-stopped
@@ -66,6 +71,9 @@ services:
       timeout: 5s
       retries: 3
     command: tail -f /dev/null
+    profiles:
+      - cloud
+      - local
 
 networks:
   letta-network:
