@@ -35,6 +35,7 @@ All services run on a Docker network with health checks and persistent volumes. 
 
    Edit `.env` with your credentials:
    ```bash
+   LETTA_API_KEY=letta-your-api-key-here
    OPENAI_API_KEY=sk-your-openai-key-here
    TELEGRAM_BOT_TOKEN=your-telegram-bot-token-here
    # Optional (Compose already uses internal URL)

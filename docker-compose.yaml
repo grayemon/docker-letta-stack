@@ -30,6 +30,7 @@ services:
       - ./lettabot.yaml:/app/lettabot.yaml
     environment:
       - LETTA_BASE_URL=http://letta-server:8283
+      - LETTA_API_KEY=${LETTA_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_DM_POLICY=open
       - DATA_DIR=/app/data
