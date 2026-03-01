@@ -5,13 +5,13 @@ server:
 
 agent:
   name: LettaBot
-  model: gpt-4o
+  model: openai/gpt-4o-mini
 
 channels:
   telegram:
     enabled: true
     token: ${TELEGRAM_BOT_TOKEN}
-    dmPolicy: pairing
+    dmPolicy: open
 
 features:
   cron: false

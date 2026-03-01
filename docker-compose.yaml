@@ -28,10 +28,11 @@ services:
     volumes:
       - ./data/letta-bot:/app/data
       - ./lettabot.yaml:/app/lettabot.yaml
-      - ./lettabot-agent.json:/app/lettabot-agent.json
     environment:
-      - LETTA_BASE_URL=${LETTA_BASE_URL}
+      - LETTA_BASE_URL=http://letta-server:8283
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_DM_POLICY=open
+      - DATA_DIR=/app/data
     networks:
       - letta-network
     restart: unless-stopped
@@ -54,7 +55,7 @@ services:
     volumes:
       - ./data/letta-workspace:/workspace
     environment:
-      - LETTA_BASE_URL=${LETTA_BASE_URL}
+      - LETTA_BASE_URL=http://letta-server:8283
     networks:
       - letta-network
     restart: unless-stopped
