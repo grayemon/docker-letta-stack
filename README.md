@@ -68,7 +68,7 @@ All services run on a Docker network with health checks and persistent volumes. 
    ```bash
    docker-compose --profile local up -d
    ```
-   Uses: `lettabot.local.yaml`
+   Uses: `lettabot.local.yaml` (includes letta-server)
    All services start automatically (no need to list them)
 
    **Cloud mode (api.letta.com):**
