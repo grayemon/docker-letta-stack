@@ -226,15 +226,69 @@ docker-compose logs letta-server
 
 ### Bot not responding
 
-```bash
-# Check bot logs
-docker-compose logs letta-bot
+**Common causes:**
+1. **Invalid or expired bot token** - Bot token may be invalid or revoked
+2. **Agent not created** - First message triggers agent creation (can take time)
+3. **Telegram API issues** - Bot may be in webhook mode instead of polling
+4. **Letta API connection** - Slow or failed connection to Letta server
 
-# Verify configuration
-docker-compose exec letta-bot cat /app/lettabot.yaml
+**Troubleshooting steps:**
+
+**1. Verify bot token:**
+```bash
+# Check your .env file
+cat .env | grep TELEGRAM_BOT_TOKEN
+
+# Verify token format (should look like: 123456789:ABCdefGHIjklMNOpqrsTUVwxyz)
 ```
 
-If you see Windows file lock errors (EBUSY), ensure `DATA_DIR=/app/data` is set in docker-compose (already configured here).
+**2. Check Telegram bot status:**
+```bash
+# Open Telegram and message @BotFather
+# Send /mybots to see all your bots
+# Verify bot name and token match
+```
+
+**3. Check bot logs for errors:**
+```bash
+# Check for Telegram API errors (404, 401, etc.)
+docker-compose --file docker-compose.local.yaml logs letta-bot --tail=50
+
+# Look for specific error patterns:
+# - "Call to 'getMe' failed" - Invalid token
+# - "Bot polling error" - Token issues
+# - "deleteWebhook failed" - Webhook configuration issue
+```
+
+**4. Verify agent status:**
+```bash
+# Check if agent exists in Letta
+docker-compose --file docker-compose.local.yaml exec letta-bot lettabot model show
+
+# If "No agent found", send a message to trigger creation
+# First message will create agent automatically
+```
+
+**5. Restart bot with new token:**
+```bash
+# Update .env with new token
+# Restart bot container
+docker-compose --file docker-compose.local.yaml restart letta-bot
+
+# Wait 30-60 seconds for bot to initialize
+docker-compose --file docker-compose.local.yaml logs letta-bot --tail=30
+```
+
+**6. Check configuration file:**
+```bash
+# Verify lettabot config is correct
+docker-compose --file docker-compose.local.yaml exec letta-bot cat /app/lettabot.yaml
+
+# Check model configuration
+# Ensure model is set correctly (e.g., openai/gpt-4o-mini)
+```
+
+**If you see Windows file lock errors (EBUSY), ensure `DATA_DIR=/app/data` is set in docker-compose (already configured here).**
 
 ### Reset everything
 
