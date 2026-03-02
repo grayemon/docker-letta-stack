@@ -7,10 +7,11 @@ server:
 
 agents:
   - name: LettaBot
+    model: openai/gpt-4o-mini
     channels:
       telegram:
         enabled: true
-        token: ${TELEGRAM_BOT_TOKEN}
+        token: 8648678194:AAGVXf2TUEcALTJKHod6DHTSl9KwbwaJQyw
         dmPolicy: open
         groupDebounceSec: 5
 

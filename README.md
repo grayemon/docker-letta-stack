@@ -314,6 +314,13 @@ Contributions welcome! Feel free to submit issues and pull requests.
 - Referenced resources/SKILL.md for detailed LettaBot commands
 - Added model configuration instructions with profile support
 
+### [2026-03-02] Fixed Telegram bot model configuration
+- Resolved issue where bot was trying to use non-existent Anthropic model (anthropic/claude-sonnet-4-6)
+- Created agent manually using Letta Code SDK with OpenAI model (openai/gpt-4o-mini)
+- Updated lettabot.local.yaml to specify model: openai/gpt-4o-mini
+- Cleaned up docker-compose.local.yaml to use environment variables consistently
+- Successfully tested bot on Telegram - responding correctly
+
 ### Future improvements
 - [ ] Add GitHub Actions for automated testing
 - [ ] Add backup/restore scripts for data portability
