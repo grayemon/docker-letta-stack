@@ -1,7 +1,7 @@
 services:
-  letta-server:
+  letta-core:
     image: letta/letta:0.16.5
-    container_name: letta-server
+    container_name: letta-core
     ports:
       - "8283:8283"
     volumes:
@@ -28,7 +28,7 @@ services:
       dockerfile: Dockerfile.lettabot
     container_name: letta-bot
     depends_on:
-      letta-server:
+      letta-core:
         condition: service_healthy
     volumes:
       - ./data/letta-bot:/app/data
@@ -57,14 +57,14 @@ services:
       dockerfile: Dockerfile.workspace
     container_name: letta-workspace
     depends_on:
-      letta-server:
+      letta-core:
         condition: service_healthy
       letta-bot:
         condition: service_started
     volumes:
       - ./data/letta-workspace:/workspace
     environment:
-      - LETTA_BASE_URL=http://letta-server:8283
+      - LETTA_BASE_URL=http://letta-core:8283
     networks:
       - letta-network
     restart: unless-stopped
@@ -88,7 +88,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - LETTA_SERVER_URL=http://letta-server:8283
+      - LETTA_SERVER_URL=http://letta-core:8283
     networks:
       - letta-network
     restart: unless-stopped
@@ -98,7 +98,7 @@ services:
         max-size: "10m"
         max-file: "3"
     depends_on:
-      letta-server:
+      letta-core:
         condition: service_healthy
 
 networks:

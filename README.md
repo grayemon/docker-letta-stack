@@ -129,6 +129,102 @@ Check letta-server health:
 curl http://localhost:8283/v1/health
 ```
 
+### Backup and Restore
+
+**Scripts location:** `scripts/` directory
+
+**Create a backup:**
+```bash
+# Make scripts executable (first time only)
+chmod +x scripts/backup.sh
+
+# Run backup (stops containers, creates compressed backup)
+./scripts/backup.sh
+
+# Options:
+# --no-stop    Don't stop containers before backup
+# --no-compress  Don't compress the backup
+```
+
+**List available backups:**
+```bash
+chmod +x scripts/list-backups.sh
+./scripts/list-backups.sh
+```
+
+**Restore from backup:**
+```bash
+chmod +x scripts/restore.sh
+./scripts/restore.sh letta-backup-2026-03-07.tar.gz
+
+# Options:
+# --no-stop      Don't stop containers before restore
+# --no-start     Don't start containers after restore
+# --dirs         Specific directories to restore (letta-server,letta-bot,letta-workspace)
+# --list         List contents of backup without restoring
+```
+
+**Cleanup old backups:**
+```bash
+chmod +x scripts/cleanup-backups.sh
+./scripts/cleanup-backups.sh           # Remove backups older than 7 days
+./scripts/cleanup-backups.sh --days 30 # Remove backups older than 30 days
+./scripts/cleanup-backups.sh --dry-run  # Show what would be deleted
+```
+
+**Important:** The `.env` file is not in the data directory and must be backed up separately!
+
+### Monitoring and Logs
+
+**Scripts location:** `scripts/` directory
+
+**Health check:**
+```bash
+# Make scripts executable (first time only)
+chmod +x scripts/monitor.sh
+
+# Check all services
+./scripts/monitor.sh
+
+# Detailed output with CPU/memory
+./scripts/monitor.sh --verbose
+
+# Continuous monitoring
+./scripts/monitor.sh --watch
+
+# Check specific service
+./scripts/monitor.sh --service letta-server
+```
+
+**View logs:**
+```bash
+chmod +x scripts/logs.sh
+
+# View all logs (last 100 lines)
+./scripts/logs.sh
+
+# Filter by service
+./scripts/logs.sh --service letta-server
+
+# Filter by level (error, warn, info, debug)
+./scripts/logs.sh --level error
+
+# Follow logs in real-time
+./scripts/logs.sh --follow
+
+# Show timestamps
+./scripts/logs.sh --timestamps
+```
+
+**Dashboard (HTML):**
+Open `monitoring/dashboard.html` in a browser for a visual dashboard showing:
+- Container status
+- Resource usage (CPU/Memory)
+- API health checks
+- Recent logs
+
+Note: The dashboard requires a backend API for full functionality. Use CLI scripts for now.
+
 ## 📁 Project Structure
 
 ```
@@ -375,11 +471,45 @@ Contributions welcome! Feel free to submit issues and pull requests.
 - Cleaned up docker-compose.local.yaml to use environment variables consistently
 - Successfully tested bot on Telegram - responding correctly
 
+### [2026-03-07] Added backup/restore scripts for data portability
+- Created scripts/backup.sh - Creates timestamped compressed backups
+- Created scripts/restore.sh - Restores data from backup archives
+- Created scripts/list-backups.sh - Lists available backups
+- Created scripts/cleanup-backups.sh - Removes old backups
+- Updated README.md with backup/restore usage instructions
+- Scripts auto-stop containers for consistent database backups
+- Supports selective directory restore and retention policies
+
+### [2026-03-07] Added monitoring and logging setup
+- Created scripts/monitor.sh - Health check and alerting script
+- Created scripts/logs.sh - Log viewer with filtering
+- Created monitoring/dashboard.html - Simple HTML monitoring dashboard
+- Updated docker-compose files with logging configuration
+- Docker log rotation (max 10MB per file, 3 files max)
+- Added monitoring documentation to README.md
+
+### [2026-03-07] Added FastAPI backend for dashboard
+- Created monitoring/main.py - FastAPI server with API proxy
+- Created monitoring/Dockerfile - Container configuration
+- Updated docker-compose.local.yaml to include dashboard service
+- Refactored dashboard.html into separate HTML, CSS, JS files
+- Dashboard now proxies API calls to Letta Server in Docker network
+- Dashboard accessible at http://localhost:8080
+- Added Telegram setup documentation from lettabot docs
+
+### [2026-03-07] Issues Identified and Being Addressed
+- **Container Name Mismatch**: Backend expects `letta-server` but docker-compose uses `letta-core`
+- **Environment Variable Mapping**: Backend expects `LETTA_SERVER_URL` but docker-compose sets `LETTA_BASE_URL`
+- **Telegram Pairing**: API endpoints implemented but need frontend integration and Docker exec fixes
+- **Error Handling**: Dashboard backend needs comprehensive error handling and validation
+- **Cloud Mode Support**: Dashboard currently only supports local mode, cloud mode support needed
+- **Script Robustness**: Shell scripts need improved error handling and cross-platform compatibility
+
 ### Future improvements
 - [ ] Add GitHub Actions for automated testing
-- [ ] Add backup/restore scripts for data portability
+- [x] Add backup/restore scripts for data portability
+- [x] Add monitoring and logging setup
 - [ ] Explore multi-channel support (Slack, Discord, WhatsApp)
-- [ ] Add monitoring and logging setup
 
 ---
 

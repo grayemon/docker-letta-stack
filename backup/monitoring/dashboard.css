@@ -1,0 +1,139 @@
+/* Dashboard Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #4fc3f7;
+}
+
+.refresh-info {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.btn {
+    background: #4fc3f7;
+    color: #1a1a2e;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 2px;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #29b6f6;
+}
+
+.btn-success {
+    background: #4caf50;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #43a047;
+}
+
+.section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+input, select, textarea {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 1rem;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #4fc3f7;
+}
+
+.output {
+    background: #0d1117;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.success {
+    color: #4caf50;
+}
+
+.error {
+    color: #f44336;
+}
+
+.warning {
+    color: #ff9800;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    color: #888;
+    font-weight: 500;
+}

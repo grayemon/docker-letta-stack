@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Letta Stack - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Docker Letta Stack</h1>
+                <p style="color:#888;margin-top:5px;">Dashboard</p>
+            </div>
+            <div class="refresh-info">
+                <span id="last-updated">--</span>
+                <button class="btn" onclick="refreshAll()">Refresh</button>
+            </div>
+        </header>
+
+        <!-- Agent Status -->
+        <div class="section">
+            <div class="section-title">Current Agent (Telegram Bot)</div>
+            <button class="btn" onclick="checkCurrentAgent()">Check Current Agent</button>
+            <div id="current-agent" class="output">Click to check current agent</div>
+        </div>
+
+        <!-- Agent List -->
+        <div class="section">
+            <div class="section-title">All Agents on Letta Server</div>
+            <button class="btn" onclick="listAgents()">List All Agents</button>
+            <div id="agent-list" class="output">Click to list agents</div>
+        </div>
+
+        <!-- Create Agent -->
+        <div class="section">
+            <div class="section-title">Create New Agent</div>
+            <div class="input-group">
+                <input type="text" id="agent-name" placeholder="Agent name">
+                <select id="agent-model">
+                    <option value="openai/gpt-4o-mini">openai/gpt-4o-mini (Recommended)</option>
+                    <option value="openai/gpt-5.1-codex-mini">openai/gpt-5.1-codex-mini</option>
+                    <option value="openai/gpt-4o">openai/gpt-4o</option>
+                    <option value="openai/gpt-5">openai/gpt-5</option>
+                    <option value="letta/letta-free">letta/letta-free</option>
+                </select>
+            </div>
+            <textarea id="agent-system" rows="3" placeholder="System prompt (optional)" style="width:100%;margin-bottom:10px;"></textarea>
+            <button class="btn btn-success" onclick="createAgent()">Create Agent</button>
+            <div id="create-result" class="output" style="display:none;"></div>
+        </div>
+
+        <!-- Telegram Bot -->
+        <div class="section">
+            <div class="section-title">Telegram Bot</div>
+            <div class="input-group">
+                <input type="text" id="telegram-token" placeholder="Bot Token">
+                <button class="btn" onclick="validateTelegramBot()">Validate</button>
+            </div>
+            <div id="telegram-status"></div>
+        </div>
+
+        <!-- Pairing -->
+        <div class="section">
+            <div class="section-title">Telegram Pairing</div>
+            <button class="btn" onclick="checkPairing()">Check Requests</button>
+            <div id="pairing-section" style="display:none;margin-top:15px;">
+                <div class="input-group">
+                    <input type="text" id="pairing-code" placeholder="Pairing code">
+                    <button class="btn btn-success" onclick="approvePairing()">Approve</button>
+                </div>
+            </div>
+            <div id="pairing-status" class="output"></div>
+        </div>
+
+        <!-- Letta API -->
+        <div class="section">
+            <div class="section-title">Letta Server API</div>
+            <button class="btn" onclick="checkApiHealth()">Check Health</button>
+            <div id="api-status" class="output"></div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
